@@ -5,4 +5,6 @@ module com.gerenciadorfinanceiro.gerenciadorfinanceiro {
 
     opens com.gerenciadorfinanceiro.gerenciadorfinanceiro to javafx.fxml;
     exports com.gerenciadorfinanceiro.gerenciadorfinanceiro;
+    exports com.gerenciadorfinanceiro.gerenciadorfinanceiro.controller;
+    opens com.gerenciadorfinanceiro.gerenciadorfinanceiro.controller to javafx.fxml;
 }
