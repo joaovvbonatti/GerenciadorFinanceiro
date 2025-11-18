@@ -1,5 +1,6 @@
 package com.gerenciadorfinanceiro.gerenciadorfinanceiro;
 
+import com.gerenciadorfinanceiro.gerenciadorfinanceiro.dao.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Database.inicializar();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Gerenciador Financeiro.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
