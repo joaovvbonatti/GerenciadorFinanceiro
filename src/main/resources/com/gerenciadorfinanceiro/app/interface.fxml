@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.control.Label?>
+<AnchorPane fx:id="painelPrincipal" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadorfinanceiro.app.controller.MainController">
+<children>
+   <TabPane fx:id="painelAbas" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+     <tabs>
+         <Tab fx:id="abaInicial" text="Página Inicial">
+           <content>
+             <AnchorPane fx:id="painelInicial" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <Text fx:id="textoUseAbas" layoutX="455.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Use as abas para navegar" wrappingWidth="290.13000106811523">
+                        <font>
+                           <Font size="23.0" />
+                        </font>
+                     </Text>
+                     <Text fx:id="textoBemVindo" layoutX="249.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo ao Gerenciador Financeiro!" textAlignment="CENTER" wrappingWidth="702.1300010681152">
+                        <font>
+                           <Font size="58.0" />
+                        </font>
+                     </Text>
+                  </children>
+               </AnchorPane>
+           </content>
+         </Tab>
+       <Tab fx:id="abaSaldoExtrato" closable="false" text="Saldo e Extrato">
+            <content>
+               <AnchorPane fx:id="painelSaldoExtrato" prefHeight="200.0" prefWidth="200.0">
+                  <children>
+                     <BorderPane fx:id="painelBordaSaldoExtrato" prefHeight="769.0" prefWidth="1200.0">
+                        <top>
+                           <Text fx:id="textoSaldo" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo:" BorderPane.alignment="CENTER">
+                              <font>
+                                 <Font size="62.0" />
+                              </font>
+                           </Text>
+                        </top>
+                        <center>
+                           <Label fx:id="labelSaldo" BorderPane.alignment="CENTER">
+                              <font>
+                                 <Font name="System Bold Italic" size="48.0" />
+                              </font>
+                           </Label>
+                        </center>
+                        <bottom>
+                           <TableView fx:id="tabelaExtrato" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                             <columns>
+                               <TableColumn fx:id="colunaNome" prefWidth="75.0" text="Nome" />
+                               <TableColumn fx:id="colunaTipo" prefWidth="75.0" text="Tipo" />
+                                 <TableColumn fx:id="colunaValor" prefWidth="75.0" text="Valor" />
+                                 <TableColumn fx:id="colunaData" prefWidth="75.0" text="Data" />
+                                 <TableColumn fx:id="colunaCategoria" prefWidth="75.0" text="Categoria" />
+                             </columns>
+                              <BorderPane.margin>
+                                 <Insets />
+                              </BorderPane.margin>
+                              <padding>
+                                 <Insets bottom="50.0" left="50.0" right="50.0" />
+                              </padding>
+                           </TableView>
+                        </bottom>
+                     </BorderPane>
+                  </children>
+               </AnchorPane>
+            </content>
+       </Tab>
+         <Tab fx:id="abaGerenciarTransacoes" text="Gerenciar transações">
+           <content>
+             <AnchorPane fx:id="painelGerenciarTransacoes" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <BorderPane fx:id="painelBordaGerenciarTransacoes" prefHeight="769.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <left>
+                           <VBox fx:id="vboxBotoesTransacao" alignment="CENTER" prefHeight="769.0" prefWidth="357.0" spacing="50.0" BorderPane.alignment="CENTER">
+                              <children>
+                                 <Button fx:id="botaoAdicionarTransacao" mnemonicParsing="false" onAction="#abrirFormularioAdicionar" text="Adicionar" />
+                                 <Button fx:id="botaoRemoverTransacao" mnemonicParsing="false" text="Remover" />
+                              </children>
+                           </VBox>
+                        </left>
+                           <right>
+                              <TableView fx:id="tabelaExtrato1" prefHeight="769.0" prefWidth="825.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="colunaNome1" prefWidth="75.0" text="Nome" />
+                                    <TableColumn fx:id="colunaTipo1" prefWidth="75.0" text="Tipo" />
+                                    <TableColumn fx:id="colunaValor1" prefWidth="75.0" text="Valor" />
+                                    <TableColumn fx:id="colunaData1" prefWidth="75.0" text="Data" />
+                                    <TableColumn fx:id="colunaCategoria1" prefWidth="75.0" text="Categoria" />
+                                 </columns>
+                                 <padding>
+                                    <Insets bottom="50.0" left="50.0" right="50.0" />
+                                 </padding>
+                              </TableView>
+                           </right>
+                     </BorderPane>
+                  </children>
+               </AnchorPane>
+           </content>
+         </Tab>
+       <Tab fx:id="abaGraficoExtrato" closable="false" text="Gráfico do extrato">
+         <content>
+           <AnchorPane fx:id="painelGraficoExtrato" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <PieChart fx:id="graficoExtrato" layoutX="350.0" layoutY="185.0" title="PH" />
+                  </children></AnchorPane>
+         </content>
+       </Tab>
+         <Tab fx:id="abaGraficoSaldo" text="Gráfico do saldo">
+           <content>
+             <AnchorPane fx:id="painelGraficoSaldo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <LineChart fx:id="graficoSaldo" layoutX="350.0" layoutY="185.0" title="PH">
+                       <xAxis>
+                         <CategoryAxis label="Tempo" side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                  </children>
+               </AnchorPane>
+           </content>
+         </Tab>
+     </tabs>
+   </TabPane>
+</children>
+</AnchorPane>

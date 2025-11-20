@@ -1,4 +1,4 @@
-package com.gerenciadorfinanceiro.gerenciadorfinanceiro.model;
+package com.gerenciadorfinanceiro.app.model;
 
 import java.time.LocalDate;
 
@@ -11,12 +11,11 @@ public class Transacao {
     private LocalDate data;
     private String categoria;
 
-    public Transacao(String nome, String descricao, double valor, String tipo, int id, LocalDate data, String categoria) {
+    public Transacao(String nome, String descricao, double valor, String tipo, LocalDate data, String categoria) {
         this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
         this.tipo = tipo;
-        this.id = id;
         this.data = data;
         this.categoria = categoria;
     }

@@ -1,4 +1,4 @@
-package com.gerenciadorfinanceiro.gerenciadorfinanceiro.dao;
+package com.gerenciadorfinanceiro.app.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

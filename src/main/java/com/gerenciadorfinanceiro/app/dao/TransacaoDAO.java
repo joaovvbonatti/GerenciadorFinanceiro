@@ -1,6 +1,6 @@
-package com.gerenciadorfinanceiro.gerenciadorfinanceiro.dao;
+package com.gerenciadorfinanceiro.app.dao;
 
-import com.gerenciadorfinanceiro.gerenciadorfinanceiro.model.Transacao;
+import com.gerenciadorfinanceiro.app.model.Transacao;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -46,7 +46,7 @@ public class TransacaoDAO {
                 String categoria = rs.getString("categoria");
                 String descricao = rs.getString("descricao");
 
-                Transacao t = new Transacao(nome, descricao, valor, tipo, id, data, categoria);
+                Transacao t = new Transacao(nome, descricao, valor, tipo, data, categoria);
 
                 lista.add(t);
             }
@@ -99,5 +99,20 @@ public class TransacaoDAO {
             e.printStackTrace();
         }
     }
+
+    public static double calcularSaldo() {
+        double total = 0;
+
+        for (Transacao t : listar()) {
+            if (t.getTipo().equalsIgnoreCase("Entrada")) {
+                total += t.getValor();
+            } else {
+                total -= t.getValor();
+            }
+        }
+
+        return total;
+    }
+
 
 }

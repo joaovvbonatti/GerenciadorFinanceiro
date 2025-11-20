@@ -1,11 +1,11 @@
-module com.gerenciadorfinanceiro.gerenciadorfinanceiro {
+module com.gerenciadorfinanceiro.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
 
 
-    opens com.gerenciadorfinanceiro.gerenciadorfinanceiro to javafx.fxml;
-    exports com.gerenciadorfinanceiro.gerenciadorfinanceiro;
-    exports com.gerenciadorfinanceiro.gerenciadorfinanceiro.controller;
-    opens com.gerenciadorfinanceiro.gerenciadorfinanceiro.controller to javafx.fxml;
+    opens com.gerenciadorfinanceiro.app to javafx.fxml;
+    exports com.gerenciadorfinanceiro.app;
+    exports com.gerenciadorfinanceiro.app.controller;
+    opens com.gerenciadorfinanceiro.app.controller to javafx.fxml;
 }
