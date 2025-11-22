@@ -3,6 +3,7 @@ package com.gerenciadorfinanceiro.app.controller;
 import com.gerenciadorfinanceiro.app.model.Transacao;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -27,9 +28,13 @@ public class FormAdicionarTransacaoController {
             double valor = Double.parseDouble(campoValor.getText().trim());
             String cat = escolhaCategoria.getValue();
             String tipo = escolhaTipo.getValue();
-            LocalDate hoje = LocalDate.now();
+            LocalDate data = campoData.getValue();
 
-            resultado = new Transacao(nome, desc, valor, tipo, hoje, cat);
+            if (data == null) {
+                data = LocalDate.now();
+            }
+
+            resultado = new Transacao(nome, desc, valor, tipo, data, cat);
             salvo = true;
 
             fechar();
@@ -59,4 +64,12 @@ public class FormAdicionarTransacaoController {
     public void setCategorias() {
         escolhaCategoria.getItems().setAll("Salário", "Investimento", "Essencial", "Lazer", "Saúde");
     }
+
+    @FXML private DatePicker campoData;
+
+    @FXML public void initialize() {
+        campoData.setValue(LocalDate.now());
+    }
+
+
 }

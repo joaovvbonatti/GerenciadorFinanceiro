@@ -6,6 +6,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -13,6 +14,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -25,25 +27,33 @@
            <content>
              <AnchorPane fx:id="painelInicial" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <Text fx:id="textoUseAbas" layoutX="455.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Use as abas para navegar" wrappingWidth="290.13000106811523">
-                        <font>
-                           <Font size="23.0" />
-                        </font>
-                     </Text>
-                     <Text fx:id="textoBemVindo" layoutX="249.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo ao Gerenciador Financeiro!" textAlignment="CENTER" wrappingWidth="702.1300010681152">
-                        <font>
-                           <Font size="58.0" />
-                        </font>
-                     </Text>
+                        <BorderPane prefHeight="769.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                 <Text fx:id="textoBemVindo" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo ao Gerenciador Financeiro!" textAlignment="CENTER" wrappingWidth="702.1300010681152">
+                                    <font>
+                                       <Font size="58.0" />
+                                    </font>
+                                 </Text>
+                                 <Text fx:id="textoUseAbas" strokeType="OUTSIDE" strokeWidth="0.0" text="Use as abas para navegar" wrappingWidth="290.13000106811523">
+                                    <font>
+                                       <Font size="23.0" />
+                                    </font>
+                                 </Text>
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
                   </children>
                </AnchorPane>
            </content>
          </Tab>
        <Tab fx:id="abaSaldoExtrato" closable="false" text="Saldo e Extrato">
             <content>
-               <AnchorPane fx:id="painelSaldoExtrato" prefHeight="200.0" prefWidth="200.0">
+               <AnchorPane fx:id="painelSaldoExtrato">
                   <children>
-                     <BorderPane fx:id="painelBordaSaldoExtrato" prefHeight="769.0" prefWidth="1200.0">
+                     <BorderPane fx:id="painelBordaSaldoExtrato" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                          <top>
                            <Text fx:id="textoSaldo" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo:" BorderPane.alignment="CENTER">
                               <font>
@@ -59,7 +69,7 @@
                            </Label>
                         </center>
                         <bottom>
-                           <TableView fx:id="tabelaExtrato" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <TableView fx:id="tabelaExtrato" BorderPane.alignment="CENTER">
                              <columns>
                                  <TableColumn fx:id="colNomeExtrato" prefWidth="75.0" text="Nome" />
                                  <TableColumn fx:id="colDescExtrato" prefWidth="75.0" text="Nome" />
@@ -71,13 +81,10 @@
                               <BorderPane.margin>
                                  <Insets />
                               </BorderPane.margin>
-                              <padding>
-                                 <Insets bottom="50.0" left="50.0" right="50.0" />
-                              </padding>
                            </TableView>
                         </bottom>
                            <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                            </padding>
                      </BorderPane>
                   </children>
@@ -86,20 +93,18 @@
        </Tab>
          <Tab fx:id="abaGerenciarTransacoes" text="Gerenciar transações">
            <content>
-             <AnchorPane fx:id="painelGerenciarTransacoes" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             <AnchorPane fx:id="painelGerenciarTransacoes">
                   <children>
-                     <BorderPane fx:id="painelBordaGerenciarTransacoes" prefHeight="769.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <left>
-                           <VBox fx:id="vboxBotoesTransacao" alignment="CENTER" prefHeight="769.0" prefWidth="357.0" spacing="50.0" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                           <VBox fx:id="vboxBotoesTransacao" alignment="CENTER" spacing="50.0">
                               <children>
-                                    <Button fx:id="botaoAdicionarTransacao" mnemonicParsing="false" onAction="#abrirFormularioAdicionar" text="Adicionar" />
-                                    <Button fx:id="botaoRemoverTransacao" onAction="#removerTransacao" mnemonicParsing="false" text="Remover" />
-                                    <Button fx:id="botaoEditarTransacao" text="Editar" onAction="#editarTransacao"/>
+                                    <Button fx:id="botaoAdicionarTransacao" mnemonicParsing="false" onAction="#adicionarTransacao" text="Adicionar" />
+                                    <Button fx:id="botaoRemoverTransacao" mnemonicParsing="false" onAction="#removerTransacao" text="Remover" />
+                                    <Button fx:id="botaoEditarTransacao" onAction="#editarTransacao" text="Editar" />
                               </children>
                            </VBox>
-                        </left>
-                           <right>
-                              <TableView fx:id="tabelaGerenciar" prefHeight="769.0" prefWidth="825.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="tabelaGerenciar" HBox.hgrow="ALWAYS">
                                  <columns>
                                     <TableColumn fx:id="colNomeGerenciar" prefWidth="75.0" text="Nome" />
                                     <TableColumn fx:id="colDescGerenciar" prefWidth="75.0" text="Valor" />
@@ -108,18 +113,15 @@
                                     <TableColumn fx:id="colDataGerenciar" prefWidth="75.0" text="Data" />
                                     <TableColumn fx:id="colCategoriaGerenciar" prefWidth="75.0" text="Categoria" />
                                  </columns>
-                                 <padding>
-                                    <Insets bottom="50.0" left="50.0" right="50.0" />
-                                 </padding>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </TableView>
-                           </right>
+                           </children>
                            <padding>
-                              <Insets bottom="20.0" right="20.0" top="20.0" />
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                            </padding>
-                     </BorderPane>
+                        </HBox>
                   </children>
                      <opaqueInsets>
                         <Insets />
@@ -129,24 +131,101 @@
          </Tab>
        <Tab fx:id="abaGraficoExtrato" closable="false" text="Gráfico do extrato">
          <content>
-           <AnchorPane fx:id="painelGraficoExtrato" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+           <AnchorPane fx:id="painelGraficoExtrato">
                   <children>
-                     <PieChart fx:id="graficoExtrato" layoutX="350.0" layoutY="185.0" title="PH" />
+                        <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER" spacing="50.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data de inicio" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <DatePicker fx:id="dataInicioExtrato" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data de fim">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <DatePicker fx:id="dataFimExtrato" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="botaoFiltroExtrato" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" text="Aplicar filtro" onAction="#filtrarGraficoExtrato">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           <PieChart fx:id="graficoExtrato" title="Grafico do Extrato" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                                 </padding>
+                              </PieChart>
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                           </padding>
+                        </HBox>
                   </children></AnchorPane>
          </content>
        </Tab>
          <Tab fx:id="abaGraficoSaldo" text="Gráfico do saldo">
            <content>
-             <AnchorPane fx:id="painelGraficoSaldo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             <AnchorPane fx:id="painelGraficoSaldo">
                   <children>
-                     <LineChart fx:id="graficoSaldo" layoutX="350.0" layoutY="185.0" title="PH">
-                       <xAxis>
-                         <CategoryAxis label="Tempo" side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
+                        <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER" spacing="50.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data de inicio" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <DatePicker fx:id="dataInicioSaldo" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data de fim">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <DatePicker fx:id="dataFimSaldo" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="botaoFiltroSaldo" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" text="Aplicar filtro" onAction="#filtrarGraficoSaldo">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                               <LineChart fx:id="graficoSaldo" HBox.hgrow="ALWAYS">
+                                   <xAxis>
+                                       <NumberAxis fx:id="eixoXSaldo" />
+                                   </xAxis>
+                                   <yAxis>
+                                       <NumberAxis fx:id="eixoYSaldo" />
+                                   </yAxis>
+                               </LineChart>
+
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                           </padding>
+                        </HBox>
                   </children>
                </AnchorPane>
            </content>

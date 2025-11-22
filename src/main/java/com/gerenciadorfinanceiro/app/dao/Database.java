@@ -5,10 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private static final String URL = "jdbc:sqlite:financeiro.sqlite";
+    private static final String URL = "jdbc:sqlite:test_database_realista.db";
 
     public static void inicializar() {
-        System.out.println("Banco: " + new java.io.File("financeiro.sqlite").getAbsolutePath());
         criarTabelas();
     }
 

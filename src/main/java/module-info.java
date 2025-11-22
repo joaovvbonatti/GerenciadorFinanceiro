@@ -2,6 +2,7 @@ module com.gerenciadorfinanceiro.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires atlantafx.base;
 
 
     opens com.gerenciadorfinanceiro.app to javafx.fxml;

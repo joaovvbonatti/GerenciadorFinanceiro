@@ -8,16 +8,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainController {
     @FXML public void initialize() {
@@ -26,8 +31,8 @@ public class MainController {
         configurarColunas();
         carregarTransacoesIniciais();
         atualizarSaldo();
-        //atualizarGrafico(); //TODO
-
+        atualizarGraficoExtrato();
+        atualizarGraficoSaldo();
 
         botaoRemoverTransacao.disableProperty().bind(
                 tabelaGerenciar.getSelectionModel().selectedItemProperty().isNull()
@@ -90,7 +95,7 @@ public class MainController {
     //Aba gerenciar transações
     @FXML private Button botaoAdicionarTransacao;
 
-    @FXML private void abrirFormularioAdicionar() {
+    @FXML private void adicionarTransacao() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gerenciadorfinanceiro/app/formAdicionarTransacao.fxml"));
             Parent root = loader.load();
@@ -114,6 +119,8 @@ public class MainController {
                 TransacaoDAO.inserir(t);
                 listaTransacoes.add(t);
                 atualizarSaldo();
+                atualizarGraficoExtrato();
+                atualizarGraficoSaldo();
             }
 
         } catch (IOException e) {
@@ -149,6 +156,8 @@ public class MainController {
                 TransacaoDAO.excluir(selecionada);
                 listaTransacoes.remove(selecionada);
                 atualizarSaldo();
+                atualizarGraficoExtrato();
+                atualizarGraficoSaldo();
             }
         });
     }
@@ -181,6 +190,8 @@ public class MainController {
                 tabelaExtrato.refresh();
                 tabelaGerenciar.refresh();
                 atualizarSaldo();
+                atualizarGraficoExtrato();
+                atualizarGraficoSaldo();
             }
 
         } catch (Exception e) {
@@ -192,7 +203,126 @@ public class MainController {
 
     //Aba gráfico extrato
     @FXML private PieChart graficoExtrato;
+    @FXML private DatePicker dataInicioExtrato;
+    @FXML private DatePicker dataFimExtrato;
+
+
+    private void atualizarGraficoExtrato() {
+        atualizarGraficoExtrato(listaTransacoes);
+    }
+
+    private void atualizarGraficoExtrato(List<Transacao> transacoes) {
+        ObservableList<PieChart.Data> dados = FXCollections.observableArrayList();
+
+        transacoes.stream()
+                .filter(t -> t.getTipo().equalsIgnoreCase("Saída"))
+                .collect(Collectors.groupingBy(
+                        Transacao::getCategoria,
+                        Collectors.summingDouble(Transacao::getValor)
+                ))
+                .forEach((categoria, total) -> {
+                    dados.add(new PieChart.Data(categoria, total));
+                });
+
+        graficoExtrato.setData(dados);
+    }
+
+    @FXML private void filtrarGraficoExtrato() {
+        LocalDate ini = dataInicioExtrato.getValue();
+        LocalDate fim = dataFimExtrato.getValue();
+
+        if (ini == null || fim == null) return;
+
+        List<Transacao> filtradas = listaTransacoes.stream()
+                .filter(t -> !t.getData().isBefore(ini) && !t.getData().isAfter(fim))
+                .toList();
+
+        atualizarGraficoExtrato(filtradas);
+    }
+
+
+
+
 
     //Aba gráfico saldo
     @FXML private LineChart graficoSaldo;
+    @FXML private DatePicker dataInicioSaldo;
+    @FXML private DatePicker dataFimSaldo;
+
+    private void atualizarGraficoSaldo() {
+        atualizarGraficoSaldo(listaTransacoes);
+    }
+
+    @FXML private NumberAxis eixoXSaldo;
+    @FXML private NumberAxis eixoYSaldo;
+
+    private void atualizarGraficoSaldo(List<Transacao> lista) {
+        graficoSaldo.getData().clear();
+
+        if (lista.isEmpty()) return;
+
+        // ordenar por data
+        lista = lista.stream()
+                .sorted(Comparator.comparing(Transacao::getData))
+                .toList();
+
+        // converter data para número de dias desde a primeira
+        LocalDate base = lista.get(0).getData();
+
+        XYChart.Series<Number, Number> serie = new XYChart.Series<>();
+
+        double saldo = 0;
+        List<LocalDate> datas = new ArrayList<>();
+
+        for (Transacao t : lista) {
+            saldo += t.getTipo().equals("Entrada") ? t.getValor() : -t.getValor();
+
+            long dia = ChronoUnit.DAYS.between(base, t.getData());
+            serie.getData().add(new XYChart.Data<>(dia, saldo));
+            datas.add(t.getData());
+        }
+
+        graficoSaldo.getData().add(serie);
+
+        configurarEixoXSaldo(base, datas);
+    }
+
+
+
+    @FXML
+    private void filtrarGraficoSaldo() {
+        LocalDate ini = dataInicioSaldo.getValue();
+        LocalDate fim = dataFimSaldo.getValue();
+
+        if (ini == null || fim == null) return;
+
+        List<Transacao> filtradas = listaTransacoes.stream()
+                .filter(t -> !t.getData().isBefore(ini) && !t.getData().isAfter(fim))
+                .toList();
+
+        atualizarGraficoSaldo(filtradas);
+    }
+
+    private void configurarEixoXSaldo(LocalDate base, List<LocalDate> datas) {
+        eixoXSaldo.setAutoRanging(true);
+
+        eixoXSaldo.setTickLabelFormatter(new StringConverter<Number>() {
+            @Override
+            public String toString(Number value) {
+                LocalDate d = base.plusDays(value.longValue());
+                return d.toString();
+            }
+
+            @Override
+            public Number fromString(String s) {
+                return 0; // não usado
+            }
+        });
+
+        eixoXSaldo.setTickUnit(10); // mostra uma label a cada 10 dias
+    }
+
+
+
+
 }
