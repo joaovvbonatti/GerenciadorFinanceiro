@@ -47,6 +47,7 @@ public class TransacaoDAO {
                 String descricao = rs.getString("descricao");
 
                 Transacao t = new Transacao(nome, descricao, valor, tipo, data, categoria);
+                t.setId(id);
 
                 lista.add(t);
             }

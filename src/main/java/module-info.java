@@ -8,4 +8,5 @@ module com.gerenciadorfinanceiro.app {
     exports com.gerenciadorfinanceiro.app;
     exports com.gerenciadorfinanceiro.app.controller;
     opens com.gerenciadorfinanceiro.app.controller to javafx.fxml;
+    opens com.gerenciadorfinanceiro.app.model to javafx.base;
 }
