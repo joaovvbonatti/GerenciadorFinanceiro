@@ -1,6 +1,9 @@
 package com.gerenciadorfinanceiro.app.controller;
 
+import com.gerenciadorfinanceiro.app.components.AutoCompleteTextField;
+import com.gerenciadorfinanceiro.app.dao.TransacaoDAO;
 import com.gerenciadorfinanceiro.app.model.Transacao;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -8,13 +11,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class FormEditarTransacaoController {
 
     @FXML private TextField campoNome;
     @FXML private TextField campoDesc;
     @FXML private TextField campoValor;
-    @FXML private ChoiceBox<String> escolhaCategoria;
+    @FXML private AutoCompleteTextField campoCategoria;
     @FXML private ChoiceBox<String> escolhaTipo;
     @FXML private DatePicker campoData;
 
@@ -27,17 +31,9 @@ public class FormEditarTransacaoController {
         campoNome.setText(t.getNome());
         campoDesc.setText(t.getDescricao());
         campoValor.setText(String.valueOf(t.getValor()));
-        escolhaCategoria.setValue(t.getCategoria());
+        campoCategoria.setText(t.getCategoria());      // CORRETO
         escolhaTipo.setValue(t.getTipo());
         campoData.setValue(t.getData());
-    }
-
-    public void setCategorias() {
-        escolhaCategoria.getItems().setAll("Salário", "Investimento", "Essencial", "Lazer", "Saúde");
-    }
-
-    public void setTipos() {
-        escolhaTipo.getItems().setAll("Entrada", "Saída");
     }
 
     @FXML
@@ -46,7 +42,7 @@ public class FormEditarTransacaoController {
             transacao.setNome(campoNome.getText());
             transacao.setDescricao(campoDesc.getText());
             transacao.setValor(Double.parseDouble(campoValor.getText()));
-            transacao.setCategoria(escolhaCategoria.getValue());
+            transacao.setCategoria(campoCategoria.getText());   // CORRETO
             transacao.setTipo(escolhaTipo.getValue());
             transacao.setData(campoData.getValue());
 
@@ -55,6 +51,7 @@ public class FormEditarTransacaoController {
 
         } catch (Exception e) {
             System.out.println("Erro ao salvar edição");
+            e.printStackTrace();
         }
     }
 
@@ -69,7 +66,19 @@ public class FormEditarTransacaoController {
         stage.close();
     }
 
-    public boolean isSalvo() {
-        return salvo;
+    public boolean isSalvo() { return salvo; }
+
+    @FXML
+    public void initialize() {
+        escolhaTipo.getItems().setAll("Entrada", "Saída");
+
+        // sugestões reais de categorias
+        List<String> categorias = TransacaoDAO.listar().stream()
+                .map(Transacao::getCategoria)
+                .distinct()
+                .sorted()
+                .toList();
+
+        campoCategoria.setSuggestions(categorias);
     }
 }

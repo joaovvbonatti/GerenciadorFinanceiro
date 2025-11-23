@@ -1,6 +1,7 @@
 package com.gerenciadorfinanceiro.app;
 
 import atlantafx.base.theme.PrimerDark;
+import com.gerenciadorfinanceiro.app.auth.AuthFile;
 import com.gerenciadorfinanceiro.app.dao.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,25 +15,35 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // cria o arquivo de senha se não existir
+        AuthFile.criarArquivoSeNaoExistir("admin");
+
+        // inicializa banco
         Database.inicializar();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
+        // --- altera apenas ESTA linha ---
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/gerenciadorfinanceiro/app/login.fxml")
+        );
         Scene scene = new Scene(loader.load());
 
-        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet()); //tema escuro
+        // tema escuro
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
 
-        stage.getIcons().add( //ícone da aplicação
+        // ícone da aplicação
+        stage.getIcons().add(
                 new Image(Objects.requireNonNull(
-                        getClass().getResourceAsStream("/com/gerenciadorfinanceiro/app/icon.png")
+                        getClass().getResourceAsStream(
+                                "/com/gerenciadorfinanceiro/app/icon.png"
+                        )
                 ))
         );
 
-
         stage.setScene(scene);
-        stage.setTitle("Gerenciador Financeiro");
-        stage.setWidth(1200);
-        stage.setHeight(800);
-        stage.setResizable(true);
+        stage.setTitle("Login");
+        stage.setWidth(450);
+        stage.setHeight(300);
+        stage.setResizable(false);
         stage.show();
     }
 

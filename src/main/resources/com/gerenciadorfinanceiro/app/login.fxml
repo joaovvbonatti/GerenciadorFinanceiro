@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.gerenciadorfinanceiro.app.controller.LoginController"
+      alignment="CENTER"
+      spacing="15"
+      prefWidth="320"
+      prefHeight="240"
+      style="-fx-padding: 30;">
+
+    <Label text="Acesso ao Sistema"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <PasswordField fx:id="campoSenha"
+                   promptText="Senha"
+                   maxWidth="200"/>
+
+    <Button text="Entrar"
+            onAction="#onEntrar"
+            maxWidth="200"/>
+
+    <Label fx:id="labelErro"
+           textFill="red"
+           style="-fx-font-size: 14px;" />
+
+</VBox>

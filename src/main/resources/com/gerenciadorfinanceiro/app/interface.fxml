@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -157,7 +158,7 @@
                                           <DatePicker fx:id="dataFimExtrato" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="botaoFiltroExtrato" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" text="Aplicar filtro" onAction="#filtrarGraficoExtrato">
+                                    <Button fx:id="botaoFiltroExtrato" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" onAction="#filtrarGraficoExtrato" text="Aplicar filtro">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -205,7 +206,7 @@
                                           <DatePicker fx:id="dataFimSaldo" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="botaoFiltroSaldo" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" text="Aplicar filtro" onAction="#filtrarGraficoSaldo">
+                                    <Button fx:id="botaoFiltroSaldo" alignment="CENTER" graphicTextGap="5.0" mnemonicParsing="false" onAction="#filtrarGraficoSaldo" text="Aplicar filtro">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -230,6 +231,72 @@
                </AnchorPane>
            </content>
          </Tab>
+            <Tab text="Projeção do Saldo">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo inicial" />
+                                    <TextField fx:id="campoSaldoInicial" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Juros mensais" />
+                                    <TextField fx:id="campoJurosMensais" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo em meses" />
+                                    <TextField fx:id="campoTempoMeses" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aporte mensal" />
+                                    <TextField fx:id="campoAporteMensal" />
+                                    <Button fx:id="botaoCalcular" mnemonicParsing="false" onAction="#onCalcular" text="Calcular" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo final">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Label fx:id="labelSaldoFinal" text="-">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <LineChart fx:id="graficoProjecao" HBox.hgrow="ALWAYS">
+                                  <xAxis>
+                                      <NumberAxis fx:id="eixoMeses" />
+                                  </xAxis>
+                                  <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Senha">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER" fillWidth="false" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                           </padding>
+                           <children>
+                               <PasswordField promptText="Nova senha" fx:id="campoNovaSenha" />
+                               <PasswordField promptText="Confirmar nova senha" fx:id="campoConfirmacao" />
+                               <Label fx:id="feedbackSenha" />
+                               <Button text="Alterar senha" onAction="#onAlterarSenha"/>
+
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
      </tabs>
    </TabPane>
 </children>

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import com.gerenciadorfinanceiro.app.components.AutoCompleteTextField?>
 
 <?import javafx.scene.control.DatePicker?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadorfinanceiro.app.controller.FormAdicionarTransacaoController">
@@ -27,7 +28,7 @@
 
             <Text fx:id="textoCategoria" text="Categoria" />
 
-            <ChoiceBox fx:id="escolhaCategoria" prefWidth="150.0" />
+            <AutoCompleteTextField fx:id="campoCategoria" promptText="Categoria..."/>
 
             <Text fx:id="textoTipo" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo" />
             <ChoiceBox fx:id="escolhaTipo" prefWidth="150.0" />

@@ -1,5 +1,8 @@
 package com.gerenciadorfinanceiro.app.controller;
 
+import com.gerenciadorfinanceiro.app.auth.AuthFile;
+import com.gerenciadorfinanceiro.app.auth.AuthUtil;
+import com.gerenciadorfinanceiro.app.auth.LoginService;
 import com.gerenciadorfinanceiro.app.dao.TransacaoDAO;
 import com.gerenciadorfinanceiro.app.model.Transacao;
 import javafx.collections.FXCollections;
@@ -17,6 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -40,6 +45,8 @@ public class MainController {
         botaoEditarTransacao.disableProperty().bind(
                 tabelaGerenciar.getSelectionModel().selectedItemProperty().isNull()
         );
+
+        campoSaldoInicial.setText(String.format("%.2f", TransacaoDAO.calcularSaldo()));
     }
 
     private ObservableList<Transacao> listaTransacoes = FXCollections.observableArrayList();
@@ -103,8 +110,6 @@ public class MainController {
             // obter o controller do formulário pra passar dados
             FormAdicionarTransacaoController formCtrl = loader.getController();
             //formCtrl.setCategorias(categoriaService.listarCategorias());
-            formCtrl.setTipos();
-            formCtrl.setCategorias();
 
             // montar a stage modal
             Stage dialog = new Stage();
@@ -175,8 +180,6 @@ public class MainController {
 
             FormEditarTransacaoController ctrl = loader.getController();
 
-            ctrl.setTipos();
-            ctrl.setCategorias();
             ctrl.carregarTransacao(t);
 
             Stage dialog = new Stage();
@@ -322,7 +325,79 @@ public class MainController {
         eixoXSaldo.setTickUnit(10); // mostra uma label a cada 10 dias
     }
 
+    //Aba projeção do saldo
 
+    @FXML private TextField campoSaldoInicial;
+    @FXML private TextField campoJurosMensais;
+    @FXML private TextField campoTempoMeses;
+    @FXML private TextField campoAporteMensal;
+    @FXML private Label labelSaldoFinal;
+    @FXML private LineChart<Number, Number> graficoProjecao;
 
+    @FXML private void onCalcular() {
+        try {
+            double taxaMensal = Double.parseDouble(campoJurosMensais.getText()) / 100.0;
+            int meses = Integer.parseInt(campoTempoMeses.getText());
+            double aporteMensal = campoAporteMensal.getText().isBlank()
+                    ? 0.0
+                    : Double.parseDouble(campoAporteMensal.getText());
 
+            double saldoInicial = Double.parseDouble(campoSaldoInicial.getText());
+
+            XYChart.Series<Number, Number> serie = new XYChart.Series<>();
+            serie.setName("Projeção");
+
+            double saldo = saldoInicial;
+
+            for (int m = 0; m <= meses; m++) {
+                serie.getData().add(new XYChart.Data<>(m, saldo));
+                saldo = saldo * (1 + taxaMensal) + aporteMensal;
+            }
+
+            graficoProjecao.getData().clear();
+            graficoProjecao.getData().add(serie);
+
+            labelSaldoFinal.setText(String.format("%.2f", saldo));
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar projeção: " + e.getMessage());
+        }
+    }
+
+    //Aba senha
+
+    @FXML private TextField campoNovaSenha;
+    @FXML private TextField campoConfirmacao;
+    @FXML private Label feedbackSenha;
+
+    @FXML
+    private void onAlterarSenha() {
+
+        String nova = campoNovaSenha.getText().trim();
+        String confirm = campoConfirmacao.getText().trim();
+
+        if (nova.isEmpty() || confirm.isEmpty()) {
+            feedbackSenha.setText("Preencha os campos.");
+            feedbackSenha.setStyle("-fx-text-fill: #ff6666;");
+            return;
+        }
+
+        if (!nova.equals(confirm)) {
+            feedbackSenha.setText("As senhas não coincidem.");
+            feedbackSenha.setStyle("-fx-text-fill: #ff6666;");
+            return;
+        }
+
+        try {
+            LoginService.redefinirSenha(nova);
+            feedbackSenha.setText("Senha alterada com sucesso!");
+            feedbackSenha.setStyle("-fx-text-fill: #66ff66;");
+            campoNovaSenha.clear();
+            campoConfirmacao.clear();
+
+        } catch (Exception e) {
+            feedbackSenha.setText("Erro ao alterar a senha.");
+            feedbackSenha.setStyle("-fx-text-fill: #ff6666;");
+            e.printStackTrace();
+        }
+    }
 }
