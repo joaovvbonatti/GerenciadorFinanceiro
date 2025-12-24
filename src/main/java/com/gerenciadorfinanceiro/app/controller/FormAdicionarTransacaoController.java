@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FormAdicionarTransacaoController {
-
     @FXML private TextField campoNome;
     @FXML private TextField campoDesc;
     @FXML private TextField campoValor;
@@ -66,7 +65,6 @@ public class FormAdicionarTransacaoController {
         campoData.setValue(LocalDate.now());
         escolhaTipo.getItems().setAll("Entrada", "Saída");
 
-        // carregar sugestões reais do BD
         List<String> categorias = TransacaoDAO.listar().stream()
                 .map(Transacao::getCategoria)
                 .distinct()

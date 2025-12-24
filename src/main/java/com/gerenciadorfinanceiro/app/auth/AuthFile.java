@@ -1,6 +1,6 @@
 package com.gerenciadorfinanceiro.app.auth;
 
-import java.io.*;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;

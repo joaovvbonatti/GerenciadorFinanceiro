@@ -1,7 +1,5 @@
 package com.gerenciadorfinanceiro.app.controller;
 
-import com.gerenciadorfinanceiro.app.auth.AuthFile;
-import com.gerenciadorfinanceiro.app.auth.AuthUtil;
 import com.gerenciadorfinanceiro.app.auth.LoginService;
 import com.gerenciadorfinanceiro.app.dao.TransacaoDAO;
 import com.gerenciadorfinanceiro.app.model.Transacao;
@@ -20,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -49,7 +45,7 @@ public class MainController {
         campoSaldoInicial.setText(String.format("%.2f", TransacaoDAO.calcularSaldo()));
     }
 
-    private ObservableList<Transacao> listaTransacoes = FXCollections.observableArrayList();
+    private final ObservableList<Transacao> listaTransacoes = FXCollections.observableArrayList();
 
     private void carregarTransacoesIniciais() {
         listaTransacoes.setAll(TransacaoDAO.listar());
@@ -107,18 +103,14 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gerenciadorfinanceiro/app/formAdicionarTransacao.fxml"));
             Parent root = loader.load();
 
-            // obter o controller do formulário pra passar dados
             FormAdicionarTransacaoController formCtrl = loader.getController();
-            //formCtrl.setCategorias(categoriaService.listarCategorias());
 
-            // montar a stage modal
             Stage dialog = new Stage();
             dialog.setTitle("Adicionar Transação");
-            dialog.initModality(Modality.APPLICATION_MODAL); // bloqueia a janela principal
+            dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.setScene(new Scene(root));
-            dialog.showAndWait(); // espera o usuário fechar o dialog
+            dialog.showAndWait();
 
-            // após fechar, checar resultado
             if (formCtrl.isSalvo()) {
                 Transacao t = formCtrl.getResultado();
                 TransacaoDAO.inserir(t);
@@ -264,12 +256,10 @@ public class MainController {
 
         if (lista.isEmpty()) return;
 
-        // ordenar por data
         lista = lista.stream()
                 .sorted(Comparator.comparing(Transacao::getData))
                 .toList();
 
-        // converter data para número de dias desde a primeira
         LocalDate base = lista.get(0).getData();
 
         XYChart.Series<Number, Number> serie = new XYChart.Series<>();
@@ -318,11 +308,11 @@ public class MainController {
 
             @Override
             public Number fromString(String s) {
-                return 0; // não usado
+                return 0;
             }
         });
 
-        eixoXSaldo.setTickUnit(10); // mostra uma label a cada 10 dias
+        eixoXSaldo.setTickUnit(10);
     }
 
     //Aba projeção do saldo

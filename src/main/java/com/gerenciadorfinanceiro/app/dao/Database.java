@@ -24,7 +24,7 @@ public class Database {
                 valor REAL NOT NULL,
                 data TEXT NOT NULL,
                 categoria TEXT,
-                descricao TEXT 
+                descricao TEXT
                 );
         """;
 

@@ -78,7 +78,7 @@ public class TransacaoDAO {
 
     public static void editar(Transacao t) {
         String sql = """
-                UPDATE transacao 
+                UPDATE transacao
                 SET tipo = ?, valor = ?, data = ?, descricao = ?, categoria = ?
                 WHERE id = ?
             """;

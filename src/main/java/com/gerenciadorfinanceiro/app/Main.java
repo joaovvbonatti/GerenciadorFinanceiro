@@ -21,7 +21,6 @@ public class Main extends Application {
         // inicializa banco
         Database.inicializar();
 
-        // --- altera apenas ESTA linha ---
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/com/gerenciadorfinanceiro/app/login.fxml")
         );

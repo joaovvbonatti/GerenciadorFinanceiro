@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class AutoCompleteTextField extends TextField {
 
     private final ContextMenu suggestions = new ContextMenu();
-    private ObservableList<String> data = FXCollections.observableArrayList();
+    private final ObservableList<String> data = FXCollections.observableArrayList();
 
     public void setSuggestions(List<String> list) {
         data.setAll(list);

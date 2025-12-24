@@ -10,11 +10,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class FormEditarTransacaoController {
-
     @FXML private TextField campoNome;
     @FXML private TextField campoDesc;
     @FXML private TextField campoValor;
@@ -72,7 +70,6 @@ public class FormEditarTransacaoController {
     public void initialize() {
         escolhaTipo.getItems().setAll("Entrada", "Saída");
 
-        // sugestões reais de categorias
         List<String> categorias = TransacaoDAO.listar().stream()
                 .map(Transacao::getCategoria)
                 .distinct()
