@@ -25,7 +25,7 @@ O sistema permite registrar entradas e saídas financeiras, categorizar transaç
 
 <img src="docs/images/Saldo e extrato.png" width="700">
 <img src="docs/images/Gráfico do extrato.png" width="700">
-<img src="docs/images/Gráfico do saldo" width="700">
+<img src="docs/images/Gráfico do saldo.png" width="700">
 
 ## Licenças de Terceiros
 
