@@ -50,7 +50,7 @@
                </AnchorPane>
            </content>
          </Tab>
-       <Tab fx:id="abaSaldoExtrato" closable="false" text="Saldo e Extrato">
+       <Tab fx:id="abaSaldoExtrato" closable="false" text="Saldo e extrato">
             <content>
                <AnchorPane fx:id="painelSaldoExtrato">
                   <children>
@@ -165,7 +165,7 @@
                                     </Button>
                                  </children>
                               </VBox>
-                           <PieChart fx:id="graficoExtrato" title="Grafico do Extrato" HBox.hgrow="ALWAYS">
+                           <PieChart fx:id="graficoExtrato" title="Gráfico do extrato" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                                  </padding>
@@ -231,7 +231,7 @@
                </AnchorPane>
            </content>
          </Tab>
-            <Tab text="Projeção do Saldo">
+            <Tab text="Projeção do saldo">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
